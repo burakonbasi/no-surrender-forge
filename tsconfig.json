@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      /* Proje genel ayarları */
+      "target": "ES2020",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "strict": true,
+      "jsx": "preserve",
+      "incremental": true,
+      "skipLibCheck": true,
+      /* Monorepo içi path kısaltmaları */
+      "baseUrl": ".",
+      "paths": {
+        "@no-surrender/*": ["packages/*"]
+      }
+    },
+    "include": ["apps/**/*", "packages/**/*"],
+    "exclude": ["node_modules"]
+  }
+  

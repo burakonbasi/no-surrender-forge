@@ -8,6 +8,10 @@
       "strict": true,
       "noEmit": true,
       "incremental": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      },
       "module": "esnext",
       "esModuleInterop": true,
       "moduleResolution": "node",
