@@ -1,0 +1,195 @@
+[
+    {
+      "id": "longsword",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gümüş Diş",
+          "description": "Sade, keskin bir savaş kılıcı.",
+          "image": "/images/weapons/longsword_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Yürek",
+          "description": "Can alıcı darbeler için güçlendirildi.",
+          "image": "/images/weapons/longsword_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Pençe",
+          "description": "Kralların kanını döken efsanevi keskinlik.",
+          "image": "/images/weapons/longsword_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "battleaxe",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Ay Parçası",
+          "description": "Hafif ve hızlı bir balta.",
+          "image": "/images/weapons/battleaxe_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Kesik",
+          "description": "Derin yaralar açan büyülü çelik.",
+          "image": "/images/weapons/battleaxe_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Efsane Yarma",
+          "description": "Tek vuruşta kale kapısı deler.",
+          "image": "/images/weapons/battleaxe_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "staff",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gölge Dalı",
+          "description": "Temel büyü asası.",
+          "image": "/images/weapons/staff_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Kök",
+          "description": "Doğanın gücüyle titreşir.",
+          "image": "/images/weapons/staff_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Kök",
+          "description": "Yıldızları yere indirir, zamanı büker.",
+          "image": "/images/weapons/staff_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "shield",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gümüş Siperi",
+          "description": "Basit bir koruma aracı.",
+          "image": "/images/weapons/shield_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Zırh",
+          "description": "Gelen saldırıyı yansıtır.",
+          "image": "/images/weapons/shield_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Duvar",
+          "description": "Tanrılar bile geçemez.",
+          "image": "/images/weapons/shield_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "warhammer",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Taş Parçalayıcı",
+          "description": "Ağır ve yıkıcı.",
+          "image": "/images/weapons/warhammer_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Ezici",
+          "description": "Zırhları paramparça eder.",
+          "image": "/images/weapons/warhammer_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Hüküm",
+          "description": "Dünyayı çatlatır, düşmanları ezer.",
+          "image": "/images/weapons/warhammer_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "scimitar",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gümüş Pençe",
+          "description": "Hafif ve çevik bir bıçak.",
+          "image": "/images/weapons/scimitar_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Çengel",
+          "description": "Derin kesikler için eğildi.",
+          "image": "/images/weapons/scimitar_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Yılan",
+          "description": "Gölge gibi kayar, kaderi biçer.",
+          "image": "/images/weapons/scimitar_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "dagger",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gölge Kesik",
+          "description": "Hızlı saldırılar için ideal.",
+          "image": "/images/weapons/dagger_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Fısıltı",
+          "description": "Sessiz ama ölümcül.",
+          "image": "/images/weapons/dagger_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Dilim",
+          "description": "Zamanda bile iz bırakır.",
+          "image": "/images/weapons/dagger_lvl3.png"
+        }
+      ]
+    },
+    {
+      "id": "spellbook",
+      "maxLevel": 3,
+      "variants": [
+        {
+          "level": 1,
+          "name": "Gümüş Sayfalar",
+          "description": "Temel büyüleri içerir.",
+          "image": "/images/weapons/spellbook_lvl1.png"
+        },
+        {
+          "level": 2,
+          "name": "Zümrüt Kehanet",
+          "description": "Geleceği okur, kaderi değiştirir.",
+          "image": "/images/weapons/spellbook_lvl2.png"
+        },
+        {
+          "level": 3,
+          "name": "Altın Kitabe",
+          "description": "Evrenin sırlarını fısıldar, gerçekliği ezer.",
+          "image": "/images/weapons/spellbook_lvl3.png"
+        }
+      ]
+    }
+  ]
+  
