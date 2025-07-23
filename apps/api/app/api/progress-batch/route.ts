@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
-import dbConnect from '@/lib/mongodb';
-import UserCard from '@/models/UserCard';
-import User from '@/models/User';
+import dbConnect from '@lib/mongodb';
+import UserCard from '@/models/userCard';
+import User from '@/models/user';
 import { authenticateRequest } from '@/middleware/auth';
 import { progressBatchSchema, GAME_CONFIG } from '@no-surrender/common';
 import { consumeEnergy } from '@/utils/energy';
@@ -51,12 +51,14 @@ export async function POST(req: NextRequest) {
       }).session(session);
       
       if (!userCard) {
-        userCard = await UserCard.create([{
-          userId: authUser.userId,
-          cardId,
-          level: 1,
-          progress: 0
-        }], { session })[0];
+        [userCard] = await UserCard.create([
+          {
+            userId: authUser.userId,
+            cardId,
+            level: 1,
+            progress: 0
+          }
+        ], { session });
       }
       
       // Progress güncelleme

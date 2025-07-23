@@ -2,11 +2,11 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { EnergyBar } from '@/components/energy-bar';
-import { TabFilter } from '@/components/tab-filter';
-import { CardGrid } from '@/components/card-grid';
-import { useGameStore } from '@/store/game-store';
-import { apiClient } from '@/lib/api-client';
+import { EnergyBar } from '@components/energy-bar';
+import { TabFilter } from '@components/tab-filter';
+import { CardGrid } from '@components/card-grid';
+import { useGameStore } from '@store/game-store';
+import { apiClient } from '@lib/api-client';
 import { motion } from 'framer-motion';
 
 export default function HomePage() {

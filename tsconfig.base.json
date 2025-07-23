@@ -1,0 +1,36 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "compilerOptions": {
+      "target": "ES2022",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "baseUrl": ".",
+      "paths": {
+        "@lib/*": ["apps/api/src/lib/*"],
+        "@models/*": ["apps/api/src/models/*"],
+        "@middleware/*": ["apps/api/src/middleware/*"],
+        "@utils/*": ["apps/api/src/utils/*"],
+        "@/*": [
+          "apps/web/app/*",
+          "apps/web/lib/*",
+          "apps/web/store/*"
+        ],
+        "@components/*": ["components/*"],
+        "@/lib/*": ["apps/api/src/lib/*"],
+        "@/models/*": ["apps/api/src/models/*"],
+        "@/middleware/*": ["apps/api/src/middleware/*"],
+        "@/utils/*": ["apps/api/src/utils/*"],
+        "@no-surrender/*": ["packages/*"]
+      },
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "allowJs": true,
+      "noEmit": true,
+      "forceConsistentCasingInFileNames": true,
+      "jsx": "preserve"
+    },
+    "include": [],
+    "exclude": ["node_modules"]
+  }
+  

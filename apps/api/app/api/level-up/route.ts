@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
-import dbConnect from '@/lib/mongodb';
-import UserCard from '@/models/UserCard';
-import Card from '@/models/Card';
+import dbConnect from '@lib/mongodb';
+import UserCard from '@/models/userCard';
+import Card from '@/models/card';
 import { authenticateRequest } from '@/middleware/auth';
 import { levelUpSchema, GAME_CONFIG } from '@no-surrender/common';
 

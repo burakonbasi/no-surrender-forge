@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Card from '../src/models/Card';
+import Card from '../src/models/card';
 import cardsData from '../../../cards.json';
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ns_case';

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
-import User from '@/models/User';
+import dbConnect from '@lib/mongodb';
+import User from '@/models/user';
 import { authenticateRequest } from '@/middleware/auth';
 import { calculateEnergy } from '@/utils/energy';
 import { GAME_CONFIG } from '@no-surrender/common';

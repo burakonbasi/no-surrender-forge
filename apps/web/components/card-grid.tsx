@@ -1,6 +1,6 @@
 'use client';
 
-import { useGameStore } from '@/store/game-store';
+import { useGameStore } from '@store/game-store';
 import { Card } from './card';
 import { motion } from 'framer-motion';
 

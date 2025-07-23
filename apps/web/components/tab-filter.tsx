@@ -1,6 +1,6 @@
 'use client';
 
-import { useGameStore } from '@/store/game-store';
+import { useGameStore } from '@store/game-store';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
 

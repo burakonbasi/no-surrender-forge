@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { useGameStore } from '@/store/game-store';
+import { useGameStore } from '@store/game-store';
 import { GAME_CONFIG } from '@no-surrender/common';
 
 export function EnergyBar() {

@@ -11,7 +11,11 @@
       /* Monorepo içi path kısaltmaları */
       "baseUrl": ".",
       "paths": {
-        "@no-surrender/*": ["packages/*"]
+        "@/*": [
+          "app/*",
+          "lib/*",
+          "store/*"
+        ]
       }
     },
     "include": ["apps/**/*", "packages/**/*"],

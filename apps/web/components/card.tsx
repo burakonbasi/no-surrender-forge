@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useGameStore } from '@/store/game-store';
+import { useGameStore } from '@store/game-store';
 import { GAME_CONFIG } from '@no-surrender/common';
 import clsx from 'clsx';
 

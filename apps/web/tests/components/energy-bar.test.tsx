@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import { EnergyBar } from '@/components/energy-bar'
-import { useGameStore } from '@/store/game-store'
+import { EnergyBar } from '@components/energy-bar'
+import { useGameStore } from '@store/game-store'
 
-jest.mock('@/store/game-store')
+jest.mock('@store/game-store')
 
 describe('EnergyBar', () => {
   const mockUseGameStore = useGameStore as jest.MockedFunction<typeof useGameStore>

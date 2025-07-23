@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/mongodb';
-import Card from '@/models/Card';
-import UserCard from '@/models/UserCard';
+import dbConnect from '@lib/mongodb';
+import Card from '@/models/card';
+import UserCard from '@/models/userCard';
 import { authenticateRequest } from '@/middleware/auth';
 
 export async function GET(req: NextRequest) {
