@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
+const nextConfig = {
+    transpilePackages: ['@no-surrender/common'],
+    images: {
+      domains: ['localhost'],
+    },
+  };
+  
+  module.exports = nextConfig;
