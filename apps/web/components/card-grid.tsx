@@ -9,8 +9,6 @@ export function CardGrid() {
 
   const filteredCards = cards.filter(card => {
     if (selectedTab === 'all') return true;
-    
-    // Tab'lara göre seviye filtreleme
     if (selectedTab === 'swords') {
       return card.userLevel === 1;
     }
@@ -20,13 +18,12 @@ export function CardGrid() {
     if (selectedTab === 'magic') {
       return card.userLevel >= 3;
     }
-    
     return true;
   });
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div 
+      <motion.div
         key={selectedTab}
         className="grid grid-cols-2 gap-x-6 gap-y-7 pb-8 px-2 bg-[#18162A] rounded-3xl"
         initial={{ opacity: 0 }}
@@ -39,7 +36,7 @@ export function CardGrid() {
             key={card.id}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ 
+            transition={{
               delay: index * 0.05,
               duration: 0.2
             }}
@@ -48,9 +45,8 @@ export function CardGrid() {
             <Card card={card} />
           </motion.div>
         ))}
-        
         {filteredCards.length === 0 && (
-          <motion.div 
+          <motion.div
             className="col-span-2 text-center py-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
