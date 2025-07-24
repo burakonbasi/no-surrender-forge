@@ -43,17 +43,17 @@ export function EnergyBar() {
   const percentage = (energy / maxEnergy) * 100;
 
   return (
-    <div className="bg-[#1A1922] rounded-2xl p-4 mb-4">
-      <div className="flex items-center gap-4">
+    <div className="bg-transparent rounded-2xl p-0 mb-4">
+      <div className="flex items-center gap-2">
         {/* Energy Icon */}
-        <div className="relative w-14 h-14 flex-shrink-0">
-          <div className="w-full h-full rounded-xl bg-gradient-to-br from-[#FF1E67] to-[#E91E63] p-3 shadow-lg">
+        <div className="relative w-12 h-12 flex-shrink-0 -mt-2">
+          <div className="w-full h-full rounded-xl bg-transparent flex items-center justify-center">
             <Image
               src="/images/weapons/case-energy 1.png"
               alt="Energy"
-              width={32}
-              height={32}
-              className="w-full h-full object-contain"
+              width={48}
+              height={48}
+              className="w-full h-full object-contain drop-shadow-lg"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
@@ -62,48 +62,27 @@ export function EnergyBar() {
             />
           </div>
         </div>
-        
         {/* Progress Bar Container */}
         <div className="flex-1">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-white text-sm font-semibold">Enerji</span>
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-[#9B9AA2]">Yenilenmesine Kalan:</span>
-              <span className="text-white font-semibold">{formatTime(timeToNext)}</span>
-            </div>
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[#FFD6FB] text-base font-bold tracking-wide">Enerji</span>
+            <span className="text-[#FFD6FB] text-xs font-bold">%1 Yenilenmesine Kalan: {formatTime(timeToNext)}</span>
           </div>
-          
-          {/* Progress Bar */}
-          <div className="relative h-8 bg-[#252430] rounded-full overflow-hidden">
+          <div className="relative h-8 bg-[#2A002E] rounded-full overflow-hidden border-2 border-[#FFD6FB]">
             <motion.div
               className="absolute inset-y-0 left-0"
               initial={{ width: 0 }}
               animate={{ width: `${percentage}%` }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
             >
-              <div className="h-full bg-gradient-to-r from-[#FF1E67] to-[#FF6B35] relative">
-                {/* Shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent" />
-              </div>
+              <div className="h-full bg-[#FF6BCB] relative" />
             </motion.div>
-            
             {/* Percentage Text */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-sm font-bold text-white drop-shadow-md">
+            <div className="absolute inset-y-0 right-4 flex items-center">
+              <span className="text-base font-extrabold text-[#FFD6FB] drop-shadow-md">
                 %{Math.round(percentage)}
               </span>
             </div>
-          </div>
-          
-          {/* Bottom Text */}
-          <div className="flex items-center justify-between mt-1">
-            <span className="text-[10px] text-[#9B9AA2]">
-              %{Math.round(100 - percentage)}
-            </span>
-            <span className="text-[10px] text-[#9B9AA2]">
-              %{Math.round(percentage)}
-            </span>
           </div>
         </div>
       </div>

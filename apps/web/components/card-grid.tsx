@@ -28,7 +28,7 @@ export function CardGrid() {
     <AnimatePresence mode="wait">
       <motion.div 
         key={selectedTab}
-        className="grid grid-cols-2 gap-3 pb-8"
+        className="grid grid-cols-2 gap-x-6 gap-y-7 pb-8 px-2 bg-[#18162A] rounded-3xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -43,6 +43,7 @@ export function CardGrid() {
               delay: index * 0.05,
               duration: 0.2
             }}
+            className="drop-shadow-2xl"
           >
             <Card card={card} />
           </motion.div>
