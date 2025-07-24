@@ -23,8 +23,26 @@ Epic weapon forging game built with Next.js, TypeScript, MongoDB, and Redis.
 ## 🛠️ Installation
 
 ### Local Development (with Docker)
+   docker compose build --no-cache
+   docker-compose up -d
 
 1. Clone the repository:
 ```bash
 git clone https://github.com/burakonbasi/no-surrender-forge.git
 cd no-surrender-forge
+cd docker
+    - docker compose build --no-cache
+    - docker-compose up -d
+
+## Seed the database
+pnpm run seed
+
+## Start development servers
+pnpm dev
+
+Web app: http://localhost:3000
+API: http://localhost:3001
+
+## Production Build
+pnpm build
+docker-compose -f docker/docker-compose.yml up --build

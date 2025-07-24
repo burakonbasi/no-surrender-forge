@@ -1,39 +1,66 @@
-FROM node:20-alpine AS base
+# Development stage
+FROM node:20-alpine AS development
+
 RUN apk add --no-cache libc6-compat
 RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
 
 WORKDIR /app
 
-# ---------- deps layer ----------
-FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
+# Copy package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/web/package.json ./apps/web/
 COPY packages/common/package.json ./packages/common/
 
-RUN pnpm install --filter=@no-surrender/web... --filter=@no-surrender/common --frozen-lockfile
+# Install all dependencies
+RUN pnpm install --frozen-lockfile
 
-# ---------- build layer ----------
-FROM base AS builder
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/apps/web/node_modules ./apps/web/node_modules
-COPY --from=deps /app/packages/common/node_modules ./packages/common/node_modules
+# Copy source files
 COPY . .
 
-RUN pnpm turbo run build --filter=@no-surrender/web...
+# Expose port
+EXPOSE 3000
 
-# ---------- runtime layer ----------
-FROM base AS runner
+# Development command
+CMD ["pnpm", "--filter", "@no-surrender/web", "dev"]
+
+# Production build stage
+FROM node:20-alpine AS builder
+
+RUN apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+
 WORKDIR /app
-ENV NODE_ENV=production
 
+# Copy all files
+COPY . .
+
+# Install and build
+RUN pnpm install --frozen-lockfile
+RUN pnpm --filter @no-surrender/web... build
+
+# Production stage
+FROM node:20-alpine AS production
+
+RUN apk add --no-cache libc6-compat
+RUN corepack enable && corepack prepare pnpm@8.15.6 --activate
+
+WORKDIR /app
+
+# Copy necessary files
+COPY --from=builder /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
+COPY --from=builder /app/apps/web/package.json ./apps/web/
+COPY --from=builder /app/packages/common/package.json ./packages/common/
+
+# Install production dependencies
+RUN pnpm install --prod --frozen-lockfile
+
+# Copy built application
 COPY --from=builder /app/apps/web/.next ./apps/web/.next
 COPY --from=builder /app/apps/web/public ./apps/web/public
-COPY --from=builder /app/apps/web/package.json ./apps/web/package.json
 COPY --from=builder /app/packages ./packages
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
-COPY --from=builder /app/turbo.json ./turbo.json
 
 WORKDIR /app/apps/web
+
 EXPOSE 3000
+
 CMD ["pnpm", "start"]
