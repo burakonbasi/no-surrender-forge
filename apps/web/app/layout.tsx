@@ -1,21 +1,20 @@
-import type { Metadata } from 'next';
-import './globals.css';
+// apps/web/app/layout.tsx
+import type { Metadata } from 'next'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'No Surrender Forge',
-  description: 'Epic weapon forging game',
-};
+  description: 'Weapon upgrade game',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="tr">
-      <body className="font-galano bg-gradient-to-br from-bg-dark-start to-bg-dark-end min-h-screen">
-        {children}
-      </body>
+      <body className="font-galano">{children}</body>
     </html>
-  );
+  )
 }

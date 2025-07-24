@@ -2,7 +2,7 @@
 
 import { useGameStore } from '@store/game-store';
 import { Card } from './card';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export function CardGrid() {
   const { cards, selectedTab } = useGameStore();
@@ -10,39 +10,56 @@ export function CardGrid() {
   const filteredCards = cards.filter(card => {
     if (selectedTab === 'all') return true;
     
-    // Tab isimlerine göre filtreleme (weapon türlerine göre)
+    // Tab'lara göre seviye filtreleme
     if (selectedTab === 'swords') {
-      return ['longsword', 'scimitar', 'dagger'].includes(card.id);
+      return card.userLevel === 1;
     }
     if (selectedTab === 'axes') {
-      return ['battleaxe', 'warhammer'].includes(card.id);
+      return card.userLevel === 2;
     }
     if (selectedTab === 'magic') {
-      return ['staff', 'spellbook'].includes(card.id);
-    }
-    if (selectedTab === 'shields') {
-      return ['shield'].includes(card.id);
+      return card.userLevel >= 3;
     }
     
     return true;
   });
 
   return (
-    <motion.div
-      layout
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
-    >
-      {filteredCards.map((card, index) => (
-        <motion.div
-          key={card.id}
-          layout
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.05 }}
-        >
-          <Card card={card} />
-        </motion.div>
-      ))}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div 
+        key={selectedTab}
+        className="grid grid-cols-2 gap-3 pb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+      >
+        {filteredCards.map((card, index) => (
+          <motion.div
+            key={card.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ 
+              delay: index * 0.05,
+              duration: 0.2
+            }}
+          >
+            <Card card={card} />
+          </motion.div>
+        ))}
+        
+        {filteredCards.length === 0 && (
+          <motion.div 
+            className="col-span-2 text-center py-20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <div className="text-6xl mb-4 opacity-10">🔍</div>
+            <p className="text-white/60 text-sm font-medium">Bu seviyede kart bulunamadı</p>
+            <p className="text-[#5A596B] text-xs mt-2">Farklı bir seviye seçin</p>
+          </motion.div>
+        )}
+      </motion.div>
+    </AnimatePresence>
   );
 }
