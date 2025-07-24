@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 export function EnergyBar() {
   const { energy, maxEnergy, fetchEnergy } = useGameStore();
-  const [timeToNext, setTimeToNext] = useState<number>(119); // 1:59 başlangıç
+  const [timeToNext, setTimeToNext] = useState<number>(119);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -41,28 +41,23 @@ export function EnergyBar() {
   const percentage = (energy / maxEnergy) * 100;
 
   return (
-    <div className="w-full flex flex-col gap-1 mb-4">
-      <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-2">
-          <Image src="/images/weapons/case-energy 1.png" alt="energy" width={28} height={28} className="inline-block -mt-1" />
-          <span className="text-[#FFD6FB] text-[15px] font-bold">Enerji</span>
+    <div className="mb-3">
+      <div className="flex items-center justify-between mb-1 px-1">
+        <div className="flex items-center gap-1.5">
+          <Image src="/images/weapons/case-energy 1.png" alt="energy" width={20} height={20} />
+          <span className="text-white text-sm font-bold">Enerji</span>
         </div>
-        <span className="text-[#FFD6FB] text-xs font-bold">%1 Yenilenmesine Kalan: {formatTime(timeToNext)}</span>
+        <span className="text-white/60 text-xs">Yenilenme: {formatTime(timeToNext)}</span>
       </div>
-      <div className="relative h-7 bg-[#2A002E] rounded-full overflow-hidden border-2 border-[#FFD6FB] w-full">
+      <div className="relative h-6 bg-[#1A1A2E] rounded-full overflow-hidden">
         <motion.div
-          className="absolute inset-y-0 left-0"
+          className="h-full bg-gradient-to-r from-[#FF6B1A] to-[#FF9A4D]"
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-        >
-          <div className="h-full bg-[#FF6BCB] relative" />
-        </motion.div>
-        {/* Percentage Text */}
-        <div className="absolute inset-y-0 right-4 flex items-center">
-          <span className="text-base font-extrabold text-[#FFD6FB] drop-shadow-md">
-            %{Math.round(percentage)}
-          </span>
+          transition={{ duration: 0.5 }}
+        />
+        <div className="absolute inset-0 flex items-center justify-end pr-3">
+          <span className="text-white text-sm font-bold">%{Math.round(percentage)}</span>
         </div>
       </div>
     </div>
