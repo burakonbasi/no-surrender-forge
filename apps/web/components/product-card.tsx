@@ -55,7 +55,7 @@ export function ProductCard({
           className={clsx(
             'w-full py-3 rounded-full font-bold text-sm',
             isUpgrade && 'bg-gradient-to-r from-[#FF1E67] to-[#FF6B96] text-white',
-            !isUpgrade && !disabled && 'bg-gradient-to-r from-[#FF6B1A] to-[#FF9A4D] text-white',
+            !isUpgrade && !disabled && 'bg-gradient-to-r from-[#EE39A8] to-[#FF6B96] text-white',
             disabled && 'bg-[#252430] text-[#5A596B] cursor-not-allowed'
           )}
         >

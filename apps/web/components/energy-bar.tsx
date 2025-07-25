@@ -51,7 +51,7 @@ export function EnergyBar() {
       </div>
       <div className="relative h-6 bg-[#1A1A2E] rounded-full overflow-hidden">
         <motion.div
-          className="h-full bg-gradient-to-r from-[#FF6B1A] to-[#FF9A4D]"
+          className="h-full bg-gradient-to-r from-[#EE39A8] to-[#FF6B96]"
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}
           transition={{ duration: 0.5 }}

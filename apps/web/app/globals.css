@@ -119,7 +119,8 @@
   }
   
   .gradient-orange {
-    background: linear-gradient(135deg, #FF6B1A 0%, #FFB84D 100%);
+    background: linear-gradient(135deg, #EE39A8
+ 0%, #FFB84D 100%);
   }
   
   .gradient-shine::before {

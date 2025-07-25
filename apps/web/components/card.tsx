@@ -71,7 +71,7 @@ export function Card({ card }: CardProps) {
           className={clsx(
             'w-full py-4 rounded-full font-bold text-sm',
             canUpgrade && 'bg-gradient-to-r from-[#FF1E67] to-[#FF6B96] text-white',
-            canClick && !canUpgrade && 'bg-gradient-to-r from-[#FF6B1A] to-[#FF9A4D] text-white',
+            canClick && !canUpgrade && 'bg-gradient-to-r from-[#EE39A8] to-[#FF6B96] text-white',
             !canClick && !canUpgrade && 'bg-[#252430] text-[#5A596B] cursor-not-allowed'
           )}
         >

@@ -22,7 +22,7 @@ export function TabFilter() {
           className={clsx(
             'flex-1 py-2 rounded-xl text-xs font-bold transition-all',
             selectedTab === tab.id 
-              ? 'bg-gradient-to-r from-[#FF6B1A] to-[#FF9A4D] text-white' 
+              ? 'bg-gradient-to-r from-[#F4BC79] to-[#F4BC79] text-white' 
               : 'text-gray-400 hover:text-white'
           )}
         >

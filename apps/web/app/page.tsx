@@ -76,7 +76,7 @@ export default function HomePage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-[390px] mx-auto px-4 py-4">
+      <div className="max-w-[420px] mx-auto px-4 py-4">
         {/* Energy Bar */}
         <EnergyBar />
         
