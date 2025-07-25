@@ -143,8 +143,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const state = get();
     set({ isLoading: true });
     try {
-      // increment değeri GAME_CONFIG.PROGRESS_STEP olmalı
-      await apiClient.progressBatch({ cardId, increment: GAME_CONFIG.PROGRESS_STEP });
+      // cardId kesinlikle string, increment kesinlikle 2 olarak gönder
+      await apiClient.progressBatch({ cardId: String(cardId), increment: 2 });
       await get().fetchCards();
       await get().fetchEnergy();
     } catch (error) {
