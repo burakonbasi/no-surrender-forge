@@ -7,7 +7,7 @@ import { GAME_CONFIG } from '@no-surrender/common';
 import Image from 'next/image';
 
 export function EnergyBar() {
-  const { energy, maxEnergy, fetchEnergy } = useGameStore();
+  const { energy, maxEnergy, fetchEnergy, isLoading } = useGameStore();
   const [timeToNext, setTimeToNext] = useState<number>(119);
 
   useEffect(() => {
@@ -50,6 +50,15 @@ export function EnergyBar() {
         <span className="text-white/60 text-xs">Yenilenme: {formatTime(timeToNext)}</span>
       </div>
       <div className="relative h-6 bg-[#1A1A2E] rounded-full overflow-hidden">
+        {/* Loading shimmer veya spinner */}
+        {isLoading && (
+          <div className="absolute inset-0 flex items-center justify-center z-20 bg-black/30 animate-pulse">
+            <svg className="w-5 h-5 text-pink-400 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+          </div>
+        )}
         <motion.div
           className="h-full bg-gradient-to-r from-[#EE39A8] to-[#FF6B96]"
           initial={{ width: 0 }}

@@ -25,7 +25,6 @@ interface GameStore {
   levelUpCard: (cardId: string) => Promise<void>;
   fetchEnergy: () => Promise<void>;
   fetchCards: () => Promise<void>;
-  optimisticUpdateProgress: (cardId: string, increment: number) => void;
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -64,8 +63,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
       });
     }
     
-    // Optimistic update
-    get().optimisticUpdateProgress(cardId, GAME_CONFIG.PROGRESS_STEP);
+    // Optimistic update kaldırıldı
+    // get().optimisticUpdateProgress(cardId, GAME_CONFIG.PROGRESS_STEP);
     
     // Auto-process batches after 300ms or 20 clicks
     const totalClicks = get().clickBatches.reduce((sum, b) => sum + b.clicks, 0);
@@ -79,16 +78,6 @@ export const useGameStore = create<GameStore>((set, get) => ({
         }
       }, 300);
     }
-  },
-  
-  optimisticUpdateProgress: (cardId, increment) => {
-    set(state => ({
-      cards: state.cards.map(card =>
-        card.id === cardId
-          ? { ...card, userProgress: Math.min(card.userProgress + increment, GAME_CONFIG.PROGRESS_STOP_AT) }
-          : card
-      )
-    }));
   },
   
   processBatches: async () => {
