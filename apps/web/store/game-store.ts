@@ -87,8 +87,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
         card.id === cardId
           ? { ...card, userProgress: Math.min(card.userProgress + increment, GAME_CONFIG.PROGRESS_STOP_AT) }
           : card
-      ),
-      energy: Math.max(0, state.energy - 1)
+      )
     }));
   },
   

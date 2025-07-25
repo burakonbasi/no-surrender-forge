@@ -3,9 +3,12 @@
 import { useGameStore } from '@store/game-store';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { PressAndHoldButton } from './press-and-hold-button';
+import { useToastStore } from '../store/toast-store';
 
 export function CardGrid() {
   const { cards, selectedTab, addClick, levelUpCard, energy } = useGameStore();
+  const toast = useToastStore();
 
   const filteredCards = cards.filter(card => {
     if (selectedTab === 'all') return true;
@@ -32,6 +35,7 @@ export function CardGrid() {
           const canClick = energy > 0 && !canUpgrade;
           // Buton rengi: Geliştir ise #F4BC79, Yükselt ise #EE39A8
           const buttonBg = canUpgrade ? 'bg-[#EE39A8]' : 'bg-[#F4BC79]';
+
           return (
             <motion.div
               key={card.id}
@@ -72,10 +76,17 @@ export function CardGrid() {
                         <span className="absolute right-1 top-1/2 -translate-y-1/2 text-[8px] font-semibold text-white w-[22px] text-center">%{card.userProgress}</span>
                       </div>
                       {/* Buton */}
-                      <button
+                      <PressAndHoldButton
                         onClick={() => {
                           if (canUpgrade) levelUpCard(card.id);
                           else if (canClick) addClick(card.id);
+                          else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
+                          else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
+                        }}
+                        onHold={() => {
+                          if (!canUpgrade && canClick) addClick(card.id);
+                          else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
+                          else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
                         }}
                         disabled={!canClick && !canUpgrade}
                         className={
@@ -93,7 +104,7 @@ export function CardGrid() {
                             <span className="text-[#23222B] text-[9px] font-semibold leading-[11px] text-right text-white">-1 Geliştir</span>
                           </>
                         )}
-                      </button>
+                      </PressAndHoldButton>
                     </div>
                   </div>
                 </div>

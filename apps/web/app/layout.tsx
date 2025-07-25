@@ -1,6 +1,7 @@
 // apps/web/app/layout.tsx
 import type { Metadata } from 'next'
 import './globals.css'
+import { Toast } from '../components/toast';
 
 export const metadata: Metadata = {
   title: 'No Surrender Forge',
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="tr">
-      <body className="font-galano">{children}</body>
+      <body>
+        <Toast />
+        {children}
+      </body>
     </html>
   )
 }

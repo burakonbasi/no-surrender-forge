@@ -5,6 +5,9 @@ import Image from 'next/image';
 import { useGameStore } from '@store/game-store';
 import { GAME_CONFIG } from '@no-surrender/common';
 import clsx from 'clsx';
+import { usePressAndHold } from '@lib/use-press-and-hold';
+import { useToastStore } from '../store/toast-store';
+import { PressAndHoldButton } from './press-and-hold-button';
 
 interface CardProps {
   card: any;
@@ -17,14 +20,25 @@ export function Card({ card }: CardProps) {
   const isMaxLevel = card.userLevel >= GAME_CONFIG.MAX_LEVEL;
   const canUpgrade = card.userProgress >= 100 && !isMaxLevel;
   const canClick = energy > 0 && !canUpgrade;
+  const toast = useToastStore();
 
   const handleClick = async () => {
     if (canUpgrade) {
       await levelUpCard(card.id);
     } else if (canClick) {
       addClick(card.id);
+    } else if (energy <= 0) {
+      toast.setToast('Yeterli enerjin yok!');
+    } else if (card.userProgress >= 100) {
+      toast.setToast('Kart zaten geliştirmeye hazır!');
     }
   };
+
+  const pressAndHoldProps = usePressAndHold({
+    onClick: handleClick,
+    onHold: () => { if (canClick) addClick(card.id); },
+    disabled: !canClick && !canUpgrade
+  });
 
   // Seviye etiketi renkleri
   let badgeBg = 'bg-[#666]';
@@ -65,8 +79,9 @@ export function Card({ card }: CardProps) {
         {/* Büyük Yüzde */}
         <div className="text-[#E0E0E0] text-3xl font-bold mb-3">%{card.userProgress}</div>
         {/* Buton */}
-        <button
+        <PressAndHoldButton
           onClick={handleClick}
+          onHold={() => { if (canClick) addClick(card.id); }}
           disabled={!canClick && !canUpgrade}
           className={clsx(
             'w-full py-4 rounded-full font-bold text-sm',
@@ -76,7 +91,7 @@ export function Card({ card }: CardProps) {
           )}
         >
           {canUpgrade ? 'Yükselt' : 'Geliştir'}
-        </button>
+        </PressAndHoldButton>
       </div>
     </div>
   );

@@ -27,14 +27,38 @@ export async function GET(req: NextRequest) {
       await user.save();
     }
     
-    return NextResponse.json({
+    return withCORS(NextResponse.json({
       energy: currentEnergy,
       maxEnergy: GAME_CONFIG.MAX_ENERGY,
       regenMinutes: GAME_CONFIG.ENERGY_REGEN_MINUTES
-    });
+    }));
     
   } catch (error) {
     console.error('Energy error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return withCORS(NextResponse.json({ error: 'Internal server error' }, { status: 500 }));
   }
 }
+
+export async function OPTIONS(req: NextRequest) {
+  return withCORS(new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  }));
+}
+
+// Her response'a CORS header ekle
+function withCORS(response: NextResponse) {
+  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  return response;
+}
+
+// Tüm NextResponse.json(...) dönüşlerini withCORS ile wrap et
+// Örnek: return withCORS(NextResponse.json(...));
+// Tüm response'ları güncelle:
+// return NextResponse.json(...) -> return withCORS(NextResponse.json(...))

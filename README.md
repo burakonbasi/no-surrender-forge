@@ -43,6 +43,8 @@ pnpm dev
 Web app: http://localhost:3000
 API: http://localhost:3001
 
+Quickly create a user and start using it, have fun
+
 ## Production Build
 pnpm build
 docker-compose -f docker/docker-compose.yml up --build

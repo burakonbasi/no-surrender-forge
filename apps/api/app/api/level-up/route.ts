@@ -9,7 +9,7 @@ import { levelUpSchema, GAME_CONFIG } from '@no-surrender/common';
 export async function POST(req: NextRequest) {
   const authUser = await authenticateRequest(req);
   if (!authUser) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return withCORS(NextResponse.json({ error: 'Unauthorized' }, { status: 401 }));
   }
 
   try {
@@ -17,59 +17,69 @@ export async function POST(req: NextRequest) {
     const validation = levelUpSchema.safeParse(body);
     
     if (!validation.success) {
-      return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+      return withCORS(NextResponse.json({ error: validation.error.errors }, { status: 400 }));
     }
     
     const { cardId } = validation.data;
     
     await dbConnect();
     
-    const session = await mongoose.startSession();
-    session.startTransaction();
-    
     try {
       const userCard = await UserCard.findOne({ 
         userId: authUser.userId, 
         cardId 
-      }).session(session);
+      });
       
       if (!userCard) {
-        await session.abortTransaction();
-        return NextResponse.json({ error: 'Card not found' }, { status: 404 });
+        return withCORS(NextResponse.json({ error: 'Card not found' }, { status: 404 }));
       }
       
       if (userCard.progress < 100) {
-        await session.abortTransaction();
-        return NextResponse.json({ error: 'Insufficient progress' }, { status: 400 });
+        return withCORS(NextResponse.json({ error: 'Insufficient progress' }, { status: 400 }));
       }
       
-      const card = await Card.findOne({ id: cardId }).session(session);
+      const card = await Card.findOne({ id: cardId });
       if (!card || userCard.level >= card.maxLevel) {
-        await session.abortTransaction();
-        return NextResponse.json({ error: 'Max level reached' }, { status: 400 });
+        return withCORS(NextResponse.json({ error: 'Max level reached' }, { status: 400 }));
       }
       
       userCard.level += 1;
       userCard.progress = 0;
-      await userCard.save({ session });
+      await userCard.save();
       
-      await session.commitTransaction();
-      
-      return NextResponse.json({
+      return withCORS(NextResponse.json({
         cardId,
         level: userCard.level,
         progress: userCard.progress
-      });
+      }));
       
     } catch (error) {
-      await session.abortTransaction();
-      throw error;
-    } finally {
-      session.endSession();
+      console.error('Level up error:', error);
+      return withCORS(NextResponse.json({ error: 'Internal server error' }, { status: 500 }));
     }
     
   } catch (error) {
     console.error('Level up error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return withCORS(NextResponse.json({ error: 'Internal server error' }, { status: 500 }));
   }
 }
+
+export async function OPTIONS(req: NextRequest) {
+  return withCORS(new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  }));
+}
+
+// Her response'a CORS header ekle
+function withCORS(response: NextResponse) {
+  response.headers.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  return response;
+}
+
