@@ -14,7 +14,7 @@ interface CardProps {
 }
 
 export function Card({ card }: CardProps) {
-  const { energy, addClick, levelUpCard } = useGameStore();
+  const { energy, addSingleClick, addBatchClick, levelUpCard } = useGameStore();
   const [imageError, setImageError] = useState(false);
   const currentVariant = card.variants.find((v: any) => v.level === card.userLevel);
   const isMaxLevel = card.userLevel >= GAME_CONFIG.MAX_LEVEL;
@@ -26,7 +26,7 @@ export function Card({ card }: CardProps) {
     if (canUpgrade) {
       await levelUpCard(card.id);
     } else if (canClick) {
-      addClick(card.id);
+      addSingleClick(card.id);
     } else if (energy <= 0) {
       toast.setToast('Yeterli enerjin yok!');
     } else if (card.userProgress >= 100) {
@@ -36,7 +36,7 @@ export function Card({ card }: CardProps) {
 
   const pressAndHoldProps = usePressAndHold({
     onClick: handleClick,
-    onHold: () => { if (canClick) addClick(card.id); },
+    onHold: () => { if (canClick) addSingleClick(card.id); },
     disabled: !canClick && !canUpgrade
   });
 
@@ -80,8 +80,17 @@ export function Card({ card }: CardProps) {
         <div className="text-[#E0E0E0] text-3xl font-bold mb-3">%{card.userProgress}</div>
         {/* Buton */}
         <PressAndHoldButton
-          onClick={handleClick}
-          onHold={() => { if (canClick) addClick(card.id); }}
+          onClick={() => {
+            if (canUpgrade) levelUpCard(card.id);
+            else if (canClick) addSingleClick(card.id);
+            else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
+            else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
+          }}
+          onHold={() => {
+            if (!canUpgrade && canClick) addBatchClick(card.id);
+            else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
+            else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
+          }}
           disabled={!canClick && !canUpgrade}
           className={clsx(
             'w-full py-4 rounded-full font-bold text-sm',

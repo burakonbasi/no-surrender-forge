@@ -7,7 +7,7 @@ import { PressAndHoldButton } from './press-and-hold-button';
 import { useToastStore } from '../store/toast-store';
 
 export function CardGrid() {
-  const { cards, selectedTab, addClick, levelUpCard, energy } = useGameStore();
+  const { cards, selectedTab, addClick, addSingleClick, addBatchClick, levelUpCard, energy } = useGameStore();
   const toast = useToastStore();
 
   const filteredCards = cards.filter(card => {
@@ -79,12 +79,12 @@ export function CardGrid() {
                       <PressAndHoldButton
                         onClick={() => {
                           if (canUpgrade) levelUpCard(card.id);
-                          else if (canClick) addClick(card.id);
+                          else if (canClick) addSingleClick(card.id);
                           else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
                           else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
                         }}
                         onHold={() => {
-                          if (!canUpgrade && canClick) addClick(card.id);
+                          if (!canUpgrade && canClick) addBatchClick(card.id);
                           else if (energy <= 0) toast.setToast('Yeterli enerjin yok!');
                           else if (card.userProgress >= 100) toast.setToast('Kart zaten geliştirmeye hazır!');
                         }}

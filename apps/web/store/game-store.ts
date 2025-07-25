@@ -25,6 +25,8 @@ interface GameStore {
   levelUpCard: (cardId: string) => Promise<void>;
   fetchEnergy: () => Promise<void>;
   fetchCards: () => Promise<void>;
+  addSingleClick: (cardId: string) => Promise<void>;
+  addBatchClick: (cardId: string) => void;
 }
 
 export const useGameStore = create<GameStore>((set, get) => ({
@@ -134,6 +136,57 @@ export const useGameStore = create<GameStore>((set, get) => ({
       set({ cards: data.cards });
     } catch (error) {
       console.error('Fetch cards error:', error);
+    }
+  },
+
+  addSingleClick: async (cardId: string) => {
+    const state = get();
+    set({ isLoading: true });
+    try {
+      // increment değeri GAME_CONFIG.PROGRESS_STEP olmalı
+      await apiClient.progressBatch({ cardId, increment: GAME_CONFIG.PROGRESS_STEP });
+      await get().fetchCards();
+      await get().fetchEnergy();
+    } catch (error) {
+      console.error('Single click error:', error);
+      await get().fetchCards();
+      await get().fetchEnergy();
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  addBatchClick: (cardId: string) => {
+    const state = get();
+    const existingBatch = state.clickBatches.find(b => b.cardId === cardId);
+    if (existingBatch) {
+      set({
+        clickBatches: state.clickBatches.map(b =>
+          b.cardId === cardId 
+            ? { ...b, clicks: b.clicks + 1, timestamp: Date.now() }
+            : b
+        )
+      });
+    } else {
+      set({
+        clickBatches: [...state.clickBatches, {
+          cardId,
+          clicks: 1,
+          timestamp: Date.now()
+        }]
+      });
+    }
+    // Auto-process batches after 300ms or 20 clicks
+    const totalClicks = get().clickBatches.reduce((sum, b) => sum + b.clicks, 0);
+    if (totalClicks >= 20) {
+      get().processBatches();
+    } else {
+      setTimeout(() => {
+        const currentBatch = get().clickBatches.find(b => b.cardId === cardId);
+        if (currentBatch && Date.now() - currentBatch.timestamp >= 300) {
+          get().processBatches();
+        }
+      }, 300);
     }
   }
 }));
