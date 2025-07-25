@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
     const validation = progressBatchSchema.safeParse(body);
     
     if (!validation.success) {
+      console.error('progress-batch validation error:', validation.error.errors, 'body:', body);
       return withCORS(NextResponse.json({ error: validation.error.errors }, { status: 400 }));
     }
     

@@ -143,12 +143,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const state = get();
     set({ isLoading: true });
     try {
-      // increment: 1 gönder, böylece 1 enerji harcanır, 2 progress artar
-      await apiClient.progressBatch({ cardId: String(cardId), increment: 1 });
+      const body = { cardId: String(cardId), increment: 1 };
+      console.log('progressBatch body:', body);
+      await apiClient.progressBatch(body);
       await get().fetchCards();
       await get().fetchEnergy();
-    } catch (error) {
-      console.error('Single click error:', error);
+    } catch (error: any) {
+      console.error('Single click error:', error, error?.message);
       await get().fetchCards();
       await get().fetchEnergy();
     } finally {
